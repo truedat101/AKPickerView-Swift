@@ -11,14 +11,14 @@ The __Swift__ port of [AKPickerView](https://github.com/Akkyie/AKPickerView).
 Fork addition
 ------------
 
-###Ported to SWIFT 4
+### Ported to SWIFT 4
 
 In your `Podfile`:
 ```
 pod 'AKPickerView-Swift', :git => 'https://github.com/GuessWho91/AKPickerView-Swift/'
 ```
 
-###Left Align added 
+### Left Alignment added 
 
 ```swift
 self.pickerView.align = .left
