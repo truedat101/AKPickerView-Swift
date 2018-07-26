@@ -8,7 +8,21 @@ A simple yet customizable horizontal picker view.
 
 The __Swift__ port of [AKPickerView](https://github.com/Akkyie/AKPickerView).
 
-Works on iOS 7 and 8.
+Fork addition
+------------
+
+###Ported to SWIFT 4
+
+In your `Podfile`:
+```
+pod 'AKPickerView-Swift', :git => 'https://github.com/GuessWho91/AKPickerView-Swift/'
+```
+
+###Left Align added 
+
+```swift
+self.pickerView.align = .left
+```
 
 Installation
 ------------

@@ -55,10 +55,12 @@ private protocol AKCollectionViewLayoutDelegate {
 Private. A subclass of UICollectionViewCell used in AKPickerView's collection view.
 */
 private class AKCollectionViewCell: UICollectionViewCell {
+    
 	var label: UILabel!
 	var imageView: UIImageView!
 	var font = UIFont.systemFont(ofSize: UIFont.systemFontSize)
 	var highlightedFont = UIFont.systemFont(ofSize: UIFont.systemFontSize)
+    
 	var _selected: Bool = false {
 		didSet(selected) {
 			let animation = CATransition()
@@ -254,6 +256,9 @@ public class AKPickerView: UIView, UICollectionViewDataSource, UICollectionViewD
 
 	/// Readwrite. The style of the picker view. See AKPickerViewStyle.
 	public var pickerViewStyle = AKPickerViewStyle.wheel
+    
+    /// Readwrite.
+    public var align = UICollectionViewScrollPosition.centeredHorizontally
 
 	/// Readwrite. A float value which determines the perspective representation which used when using AKPickerViewStyle.Wheel style.
 	@IBInspectable public var viewDepth: CGFloat = 1000.0 {
@@ -372,11 +377,11 @@ public class AKPickerView: UIView, UICollectionViewDataSource, UICollectionViewD
 	:returns: A CGSize which contains given string just.
 	*/
 	fileprivate func sizeForString(_ string: NSString) -> CGSize {
-		let size = string.size(withAttributes: [NSAttributedStringKey.font: self.font])
-		let highlightedSize = string.size(withAttributes: [NSAttributedStringKey.font: self.highlightedFont])
-		return CGSize(
-			width: ceil(max(size.width, highlightedSize.width)),
-			height: ceil(max(size.height, highlightedSize.height)))
+        let size = string.size(withAttributes: [NSAttributedStringKey.font: self.font])
+        let highlightedSize = string.size(withAttributes: [NSAttributedStringKey.font: self.highlightedFont])
+        return CGSize(
+            width: ceil(max(size.width, highlightedSize.width)),
+            height: ceil(max(size.height, highlightedSize.height)))
 	}
 
 	/**
@@ -407,7 +412,11 @@ public class AKPickerView: UIView, UICollectionViewDataSource, UICollectionViewD
 			layout: self.collectionView.collectionViewLayout,
 			sizeForItemAt: selectedIndexPath)
 		offset -= (firstSize.width - selectedSize.width) / 2.0
-
+        
+        if (align == .left) {
+            offset += (UIScreen.main.bounds.width - selectedSize.width) / 2.0
+        }
+        
 		return offset
 	}
 
@@ -437,7 +446,7 @@ public class AKPickerView: UIView, UICollectionViewDataSource, UICollectionViewD
 				at: IndexPath(
 					item: item,
 					section: 0),
-				at: .centeredHorizontally,
+				at: align,
 				animated: animated)
 		case .wheel:
 			self.collectionView.setContentOffset(
