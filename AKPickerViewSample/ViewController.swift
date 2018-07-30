@@ -12,7 +12,7 @@ class ViewController: UIViewController, AKPickerViewDataSource, AKPickerViewDele
 
 	@IBOutlet var pickerView: AKPickerView!
 
-	let titles = ["Tokyo", "Kanagawa", "Osaka", "Aichi", "Saitama", "Chiba", "Hyogo", "Hokkaido", "Fukuoka", "Shizuoka"]
+	let titles = ["Tokyo", "1"]
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
