@@ -552,17 +552,13 @@ public class AKPickerView: UIView, UICollectionViewDataSource, UICollectionViewD
         var size = CGSize(width: self.interitemSpacing, height: collectionView.bounds.size.height)
         if let title = self.dataSource?.pickerView?(self, titleForItem: indexPath.item) {
             size.width += self.sizeForString(title as NSString).width
-            if let margin = self.delegate?.pickerView?(self, marginForItem: indexPath.item) {
-                size.width += margin.width * 2
-            }
         } else if let image = self.dataSource?.pickerView?(self, imageForItem: indexPath.item) {
             size.width += image.size.width
         }
         
-        //        let min_width = UIScreen.main.bounds.width/2
-        //        if (size.width < min_width) {
-        //            size.width = min_width
-        //        }
+        if let margin = self.delegate?.pickerView?(self, marginForItem: indexPath.item) {
+            size.width += margin.width * 2
+        }
         
         return size
     }
@@ -627,3 +623,4 @@ public class AKPickerView: UIView, UICollectionViewDataSource, UICollectionViewD
     }
     
 }
+
