@@ -260,6 +260,8 @@ public class AKPickerView: UIView, UICollectionViewDataSource, UICollectionViewD
     /// Readwrite.
     public var align = UICollectionViewScrollPosition.centeredHorizontally
     
+    public var getImageTapRecognizer: (() -> UITapGestureRecognizer)? = nil
+    
     /// Readwrite. A float value which determines the perspective representation which used when using AKPickerViewStyle.Wheel style.
     @IBInspectable public var viewDepth: CGFloat = 1000.0 {
         didSet {
@@ -541,6 +543,11 @@ public class AKPickerView: UIView, UICollectionViewDataSource, UICollectionViewD
                 }
             }
         } else if let image = self.dataSource?.pickerView?(self, imageForItem: indexPath.item) {
+            cell.imageView.accessibilityIdentifier = image.accessibilityIdentifier
+            if (getImageTapRecognizer != nil) {
+                cell.imageView.isUserInteractionEnabled = true
+                cell.imageView.addGestureRecognizer(getImageTapRecognizer!())
+            }
             cell.imageView.image = image
         }
         cell._selected = (indexPath.item == self.selectedItem)
@@ -623,4 +630,3 @@ public class AKPickerView: UIView, UICollectionViewDataSource, UICollectionViewD
     }
     
 }
-
