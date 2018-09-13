@@ -89,7 +89,7 @@ private class AKCollectionViewCell: UICollectionViewCell {
         
         self.imageView = UIImageView(frame: self.contentView.bounds)
         self.imageView.backgroundColor = UIColor.clear
-        self.imageView.contentMode = .center
+        self.imageView.contentMode = .scaleAspectFit
         self.imageView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         self.contentView.addSubview(self.imageView)
     }
@@ -260,7 +260,11 @@ public class AKPickerView: UIView, UICollectionViewDataSource, UICollectionViewD
     /// Readwrite.
     public var align = UICollectionViewScrollPosition.centeredHorizontally
     
+    /// Click on image
     public var getImageTapRecognizer: (() -> UITapGestureRecognizer)? = nil
+    
+    /// Image width
+    public var maxImageWidth: CGFloat? = nil
     
     /// Readwrite. A float value which determines the perspective representation which used when using AKPickerViewStyle.Wheel style.
     @IBInspectable public var viewDepth: CGFloat = 1000.0 {
@@ -560,7 +564,11 @@ public class AKPickerView: UIView, UICollectionViewDataSource, UICollectionViewD
         if let title = self.dataSource?.pickerView?(self, titleForItem: indexPath.item) {
             size.width += self.sizeForString(title as NSString).width
         } else if let image = self.dataSource?.pickerView?(self, imageForItem: indexPath.item) {
-            size.width += image.size.width
+            if (maxImageWidth != nil){
+                size.width += maxImageWidth!
+            } else {
+                size.width += image.size.width
+            }
         }
         
         if let margin = self.delegate?.pickerView?(self, marginForItem: indexPath.item) {
