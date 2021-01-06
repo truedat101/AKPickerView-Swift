@@ -474,6 +474,10 @@ public class AKPickerView: UIView, UICollectionViewDataSource, UICollectionViewD
         self.selectItem(item, animated: animated, notifySelection: true)
     }
     
+    public func setInitialItem (_ item: Int, animated: Bool = false) {
+        self.selectItem(item, animated: false, notifySelection: false)
+    }
+    
     /**
      Private. Select a cell whose index is given one and move to it, with specifying whether it calls delegate method.
      
